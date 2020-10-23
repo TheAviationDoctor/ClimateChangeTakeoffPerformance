@@ -26,15 +26,18 @@ airports
 data <- anti_join(traffic, airports, by = "IATA")
 data
 
-#Impute data for the missing values
+# Impute data for the values in traffic that are missing in airports
 airports_imputed <- airports %>%
   add_row(ID = max(airports$ID) + 1, IATA ="NTG", ICAO = "ZSNT", City = "Nantong", Country = "China", Altitude = 16, Latitude = 32.070833, Longitude = 120.975556) %>%
   add_row(ID = max(airports$ID) + 2, IATA ="THD", ICAO = "VVTX", City = "Sao Vàng", Country = "Vietnam", Altitude = 59, Latitude = 19.901667, Longitude = 105.467778)
   airports_imputed[which(airports_imputed$ICAO == "ZLIC"),2] <- "INC"
 
+# Join the traffic and the airports_imputed data frames
+data <- left_join(traffic, airports_imputed, by = "IATA")
+data
 
 # Round the latitude and longitude to the nearest .25 multiple and determine the Köppen-Geiger climatic zone for each airport
-#airportsClimate <- airports %>%
-#  mutate(rndCoord.lon = RoundCoordinates(LongitudeDecimalDegrees), rndCoord.lat = RoundCoordinates(LatitudeDecimalDegrees), climate = LookupCZ(airportsClimate)) %>%
-#  select(ICAOCode, rndCoord.lon, rndCoord.lat, climate) %>%
-#  filter(climate != "Climate Zone info missing")
+airports_climate <- data %>%
+  mutate(rndCoord.lon = RoundCoordinates(Longitude), rndCoord.lat = RoundCoordinates(Latitude), climate = LookupCZ(data.frame(IATA, rndCoord.lon, rndCoord.lat)))
+
+summary(airports_climate$climate)
