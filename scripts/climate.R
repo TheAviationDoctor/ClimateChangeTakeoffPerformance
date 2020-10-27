@@ -1,9 +1,10 @@
-# Clear the console
-cat("\014")
+###############################################################################
+# climate.R                                                                   #
+# Loads and wrangles the airports, runways, and Köppen-Geiger climatic zones  #
+###############################################################################
 
-# Load the kgc package that aids in identifying the Köppen-Geiger climatic zone for a given location (https://cran.r-project.org/web/packages/kgc/kgc.pdf), and the tidyverse package
-library(kgc)
-library(tidyverse)
+# Load common script for housekeeping
+source("scripts/common.R")
 
 # Define variables
 cutoff <- .95 # Percentage of all 2019 passenger traffic to be included
