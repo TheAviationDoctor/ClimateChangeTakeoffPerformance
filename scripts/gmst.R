@@ -5,13 +5,13 @@
 
 # Load common script for housekeeping
 source("scripts/common.R")
-install.packages("tidyverse")
+#install.packages("tidyverse")
 library(tidyverse)
 
 # Load the land-ocean temperature index from NASA
-url <- "https://data.giss.nasa.gov/gistemp/graphs/graph_data/Global_Mean_Estimates_based_on_Land_and_Ocean_Data/graph.txt"
-colnames <- c("Year", "Unsmoothed", "Smoothed")
+url <- "https://raw.githubusercontent.com/TheAviationDoctor/ClimateChangeTakeoffPerformance/main/data/land-ocean-temperature-index-1880-2019.csv"
+#colnames <- c("Year", "Unsmoothed", "Smoothed")
 coltypes <- list(col_character(), col_double(), col_double())
-gmst <- read_delim(url, delim = "     ", col_names = colnames, col_types = coltypes, skip = 5)
+gmst <- read_csv(url, col_names = TRUE, col_types = coltypes, skip = 5)
 gmst
 
